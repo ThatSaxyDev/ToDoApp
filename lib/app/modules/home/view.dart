@@ -61,12 +61,17 @@ class HomePage extends GetView<HomeController> {
         builder: (_, __, ___) {
           return Obx(
             () => FloatingActionButton(
-              
               backgroundColor: controller.deleting.value ? Colors.red : blue,
-              onPressed: () => Get.to(
-                () => AddDialog(),
-                transition: Transition.downToUp,
-              ),
+              onPressed: () {
+                if (controller.tasks.isNotEmpty) {
+                  Get.to(
+                    () => AddDialog(),
+                    transition: Transition.downToUp,
+                  );
+                } else {
+                  EasyLoading.showInfo('Please create your task type first');
+                }
+              },
               child: Icon(controller.deleting.value ? Icons.delete : Icons.add),
             ),
           );
